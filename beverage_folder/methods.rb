@@ -16,32 +16,27 @@ end
 
 # method to find outer key of drink
 def find_key(drink)
-  key = HASH.find do |type, inner_hash|
-    inner_hash.key?(drink)
-  end&.first
-  return key
+  HASH.each_key do |type|
+    return type if HASH[type].key?(drink)
+  end
 end
 
-#method to calculate how much to reduce or increase drink price by
+# method to calculate how much to reduce or increase drink price by
 def change(drink)
   drink_price = HASH[find_key(drink)][drink]
-  returnprice_change = drink_price * 0.05
+  drink_price * 0.05
 end
 
 # method to calculate drink prices after order
 # modify drink prices in specific drinks category depending on drink
-
 def cal(drink)
   key = find_key(drink)
   HASH[key].each do |bev, price|
-    if bev == drink
-      HASH[key][bev] = price + change(bev)
-    else
-      HASH[key][bev] = price - change(bev)
-    end
+    new_price = price + (bev == drink ? change(bev) : -change(bev))
+    HASH[key][bev] = new_price
   end
 end
 
 # # tests
-# cal('vodka')
-# display(HASH)
+cal('vodka')
+display(HASH)
