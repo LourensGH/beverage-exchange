@@ -38,5 +38,5 @@ def cal(drink)
 end
 
 # # tests
-cal('vodka')
-display(HASH)
+# cal('vodka')
+# display(HASH)
